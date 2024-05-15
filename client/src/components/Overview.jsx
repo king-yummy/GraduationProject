@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import mainSeoul from "../assets/images/mainSeoul.jpg";
@@ -7,8 +7,15 @@ import Map from "./seoulMap";
 
 export default function Overview(props) {
   const navigate = useNavigate(); // useNavigate 훅 사용
-  const cityId = parseInt(props.cityId, 10) || 1;
+  const [cityId, setCityId] = useState(1);
+  // const cityId = parseInt(props.cityId, 10) || 1;
   const cityInfo = cityData.find((cityInfo) => cityInfo.id === cityId);
+
+  useEffect(() => {
+    if (props.cityId) {
+      setCityId(parseInt(props.cityId, 10));
+    }
+  }, [props.cityId]);
 
   return (
     <Section>
@@ -90,11 +97,12 @@ export default function Overview(props) {
             <option value="" disabled selected>
               전체 상권
             </option>
-            {cityInfo.districtOptions.map((district, index) => (
-              <option key={index} value={district}>
-                {district}
-              </option>
-            ))}
+            {cityInfo.districtOptions &&
+              cityInfo.districtOptions.map((district, index) => (
+                <option key={index} value={district}>
+                  {district}
+                </option>
+              ))}
           </select>
         </div>
 
@@ -118,8 +126,8 @@ export default function Overview(props) {
           </select>
         </div>
         <div>
-          <button className="reportButton" onClick={() => navigate('/report')}>
-            > 리포트 확인
+          <button className="reportButton" onClick={() => navigate("/report")}>
+            리포트 확인
           </button>
         </div>
       </div>
