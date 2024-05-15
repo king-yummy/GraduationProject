@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import mainSeoul from "../assets/images/mainSeoul.jpg";
-import { VscListUnordered } from "react-icons/vsc";
-import { AiOutlineDollarCircle } from "react-icons/ai";
-import { BsPeople } from "react-icons/bs";
-import { VscBriefcase } from "react-icons/vsc";
-import { BiBuildingHouse } from "react-icons/bi";
-import { BsBarChart } from "react-icons/bs";
 import cityData from "../assets/data/data.json";
 import Map from "./seoulMap";
 
 export default function Overview(props) {
+  const navigate = useNavigate(); // useNavigate 훅 사용
   const cityId = parseInt(props.cityId, 10) || 1;
   const cityInfo = cityData.find((cityInfo) => cityInfo.id === cityId);
 
@@ -94,11 +90,11 @@ export default function Overview(props) {
             <option value="" disabled selected>
               전체 상권
             </option>
-            <option value="1">건대입구역</option>
-            <option value="2">건대입구역 1번</option>
-            <option value="3">광진구청</option>
-            <option value="4">어린이대공원역4번</option>
-            <option value="5">성수초등학교</option>
+            {cityInfo.districtOptions.map((district, index) => (
+              <option key={index} value={district}>
+                {district}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -122,51 +118,11 @@ export default function Overview(props) {
           </select>
         </div>
         <div>
-          <button className="reportButton"> > 리포트 확인</button>
+          <button className="reportButton" onClick={() => navigate('/report')}>
+            > 리포트 확인
+          </button>
         </div>
       </div>
-
-      {/* linkTodetail: 메인페이지 세부 분석 navigation bar */}
-      {/* <div className="linkTodetail">
-        <ul>
-          <li>
-            <a href="#summary">
-              <VscListUnordered />
-              <h3>요약</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#revenue">
-              <AiOutlineDollarCircle />
-              <h3>매출분석</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#population">
-              <BsPeople />
-              <h3>인구분석</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#sector">
-              <VscBriefcase />
-              <h3>업종분석</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#facility">
-              <BiBuildingHouse />
-              <h3>주변시설</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#es">
-              <BsBarChart />
-              <h3>소득/소비</h3>
-            </a>
-          </li>
-        </ul>
-      </div> */}
     </Section>
   );
 }
@@ -295,6 +251,7 @@ const Section = styled.section`
 
   .selection select {
     padding: 10px; /* 선택 상자 내부 패딩을 조정합니다. */
+    width: 160px;
     background: white;
     border: 1px solid #ccc;
     border-radius: 5px;
