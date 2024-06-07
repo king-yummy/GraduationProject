@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import mainSeoul from "../assets/images/mainSeoul.jpg";
-import cityData from "../assets/data/data.json";
+import cityData from "../assets/data/updated_data_sorted.json";
 import Map from "./seoulMap";
 
 export default function Overview(props) {
@@ -91,7 +91,7 @@ export default function Overview(props) {
 
       <div className="selections">
         <div className="selection">
-          <label htmlFor="selectDistrict">상권 선택</label>
+          <label htmlFor="selectDistrict">동 선택</label>
           <select name="selectDistrict" id="selectDistrict">
             {/* 옵션들을 여기에 추가합니다. */}
             <option value="" disabled selected>
