@@ -4,12 +4,24 @@ import { useNavigate } from "react-router-dom";
 import mainSeoul from "../assets/images/mainSeoul.jpg";
 import cityData from "../assets/data/updated_data_sorted.json";
 import Map from "./seoulMap";
+import RankingsList from "./RankingsList";
+import populationRankingsData from "../assets/data/유동인구_top10.json";
+import salesChangeRankingsData from "../assets/data/매출_변화량_top10_by_category.json";
 
 export default function Overview(props) {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
   const [cityId, setCityId] = useState(1);
-  // const cityId = parseInt(props.cityId, 10) || 1;
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [populationRankingsByDay, setPopulationRankingsByDay] = useState({});
+  const [salesChangeRankingsByCategory, setSalesChangeRankingsByCategory] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState('개인_소비용품_수리'); // 기본값
+
   const cityInfo = cityData.find((cityInfo) => cityInfo.id === cityId);
+
+  const industryOptions = [
+    '식료품', '음식점', '소매업', '주점업', '의류_미용', '기타_개인_서비스', '보건', '음료', '교육', '스포츠_및_오락관련_서비스업'
+  ];
 
   useEffect(() => {
     if (props.cityId) {
@@ -17,72 +29,54 @@ export default function Overview(props) {
     }
   }, [props.cityId]);
 
+  useEffect(() => {
+    setPopulationRankingsByDay(populationRankingsData);
+    setSalesChangeRankingsByCategory(salesChangeRankingsData);
+  }, []);
+
+  const handleDistrictChange = (event) => {
+    setSelectedDistrict(event.target.value);
+  };
+
+  const handleIndustryChange = (event) => {
+    setSelectedIndustry(event.target.value);
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const handleReportButtonClick = () => {
+    navigate("/report", { state: { cityInfo, selectedDistrict, selectedIndustry } });
+  };
+
+  if (Object.keys(populationRankingsByDay).length === 0 || Object.keys(salesChangeRankingsByCategory).length === 0) {
+    return <div>로딩 중...</div>;
+  }
+
   return (
     <Section>
-      {/* districtName: 메인페이지 도시이름 */}
       <div className="districtName">
         <h2 key={cityInfo.id}>{cityInfo.title}</h2>
       </div>
 
-      {/* districtTable: 메인페이지 도시별 요약현황 */}
-      <div className="districtTable">
-        <div className="Table">
-          <div className="column">
-            <h3>유동인구</h3>
-            <p>
-              {new Intl.NumberFormat().format(
-                Math.floor(cityInfo.content[0] / 1000000)
-              )}
-              백만명
-            </p>
-          </div>
-          <div className="column">
-            <h3>평균매출액</h3>
-            <p>
-              {new Intl.NumberFormat().format(
-                Math.floor(cityInfo.content[1] / 1000000)
-              )}
-              백만원
-            </p>
-          </div>
-          <div className="column">
-            <h3>주거인구</h3>
-            <p>
-              {new Intl.NumberFormat().format(
-                Math.floor(cityInfo.content[0] / 1000000)
-              )}
-              백만명
-            </p>
-          </div>
+      <div className="rankingsLists">
+        <div>
+
         </div>
-        <div className="Table">
-          <div className="column">
-            <h3>점포수</h3>
-            <p>{new Intl.NumberFormat().format(cityInfo.content[3])}개</p>
-          </div>
-          <div className="column">
-            <h3>펑균영업기간</h3>
-            <p>
-              {new Intl.NumberFormat().format(Math.floor(cityInfo.content[4]))}
-              개월
-            </p>
-          </div>
-          <div className="column">
-            <h3>창업/폐업률</h3>
-            <p>
-              <span>
-                {new Intl.NumberFormat("ko", {
-                  maximumFractionDigits: 2,
-                }).format(cityInfo.content[5])}
-                /
-                {new Intl.NumberFormat("ko", {
-                  maximumFractionDigits: 2,
-                }).format(cityInfo.content[6])}
-              </span>
-              %
-            </p>
-          </div>
-        </div>
+        <CategoryWrapper>
+          <h3>요일별 유동인구 변화율 순위</h3>
+          <RankingsList title="요일별 유동인구 변화율 순위" rankingsByDay={populationRankingsByDay} type="population" />
+        </CategoryWrapper>
+        <CategoryWrapper>
+          <h3>카테고리별 매출 변화량</h3>
+          <select value={selectedCategory} onChange={handleCategoryChange}>
+            {Object.keys(salesChangeRankingsByCategory).map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
+          <RankingsList title={`${selectedCategory} 매출 변화량`} rankingsByDay={salesChangeRankingsByCategory[selectedCategory]} type="sales" />
+        </CategoryWrapper>
       </div>
 
       <div className="contentMap">
@@ -92,10 +86,14 @@ export default function Overview(props) {
       <div className="selections">
         <div className="selection">
           <label htmlFor="selectDistrict">동 선택</label>
-          <select name="selectDistrict" id="selectDistrict">
-            {/* 옵션들을 여기에 추가합니다. */}
-            <option value="" disabled selected>
-              전체 상권
+          <select 
+            name="selectDistrict" 
+            id="selectDistrict"
+            value={selectedDistrict}
+            onChange={handleDistrictChange}
+          >
+            <option value="" disabled>
+              전체 동
             </option>
             {cityInfo.districtOptions &&
               cityInfo.districtOptions.map((district, index) => (
@@ -108,25 +106,21 @@ export default function Overview(props) {
 
         <div className="selection">
           <label htmlFor="selectIndustry">업종 선택</label>
-          <select name="selectIndustry" id="selectIndustry">
-            {/* 옵션들을 여기에 추가합니다. */}
-            <option value="" disabled selected>
-              전체 업종
-            </option>
-            <option value="1">음식점</option>
-            <option value="2">주점업</option>
-            <option value="3">음료</option>
-            <option value="4">의류 및 미용</option>
-            <option value="5">소매업 기타</option>
-            <option value="6">자동차 및 부품판매업</option>
-            <option value="7">도매 및 상품중개업</option>
-            <option value="8">교육 서비스업</option>
-            <option value="9">보건업</option>
-            <option value="10">전문 서비스업</option>
+          <select 
+            name="selectIndustry" 
+            id="selectIndustry"
+            value={selectedIndustry}
+            onChange={handleIndustryChange}
+          >
+            {industryOptions.map((industry, index) => (
+              <option key={index} value={industry}>
+                {industry}
+              </option>
+            ))}
           </select>
         </div>
         <div>
-          <button className="reportButton" onClick={() => navigate("/report")}>
+          <button className="reportButton" onClick={handleReportButtonClick}>
             리포트 확인
           </button>
         </div>
@@ -135,15 +129,40 @@ export default function Overview(props) {
   );
 }
 
+const CategoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0; /* 위아래 여백 추가 */
+  padding: 20px 0;
+
+  h3 {
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  select {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+`;
+
+
 const Section = styled.section`
   display: grid;
   grid-template-areas:
     "districtName districtName"
-    "districtTable contentMap"
-    "selections selections";
+    "contentMap rankingsLists"
+    "selections rankingsLists";
 
-  grid-template-columns: 60% 40%;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 0.7fr 1fr 1fr;
   height: 100vh;
 
   background: linear-gradient(
@@ -157,9 +176,7 @@ const Section = styled.section`
     url(${mainSeoul});
 
   background-size: cover;
-
   background-position: center;
-
   color: white;
 
   .districtName {
@@ -167,7 +184,6 @@ const Section = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10vh;
 
     h2 {
       font-size: 5rem;
@@ -178,65 +194,34 @@ const Section = styled.section`
     }
   }
 
-  .districtTable {
-    contain: inline-size;
-    grid-area: districtTable;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-
-    .Table {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      justify-content: center;
-      text-shadow: 0.1rem 0.1rem black;
-      padding: 2rem;
-
-      .column {
-        width: 30%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-
-        h3 {
-          color: #f2e8e8;
-          font-size: 1.2rem;
-          font-weight: 400;
-          margin-bottom: 0.5rem;
-        }
-
-        p {
-          font-size: 2.2rem;
-
-          span {
-            font-size: 2rem;
-          }
-        }
-      }
-    }
-  }
-
   .contentMap {
     grid-area: contentMap;
     width: 100%;
     height: 100%;
-    margin-top: 50px;
+    justify-content: center;
     display: flex;
   }
 
+  .rankingsLists {
+  grid-area: rankingsLists;
+  display: flex;
+  flex-direction: row;
+  gap: 0px; /* 리스트 사이의 간격 */
+  justify-content: center; /* 중앙 정렬 */
+  align-items: flex-start;
+  width: calc(100% - 40px); /* 부모 요소의 너비에 맞춰 확장 (패딩 고려) */
+  padding: 20px;
+  box-sizing: border-box; /* 패딩을 너비에 포함 */
+}
+
   .selections {
-    width: 500px;
-    height: 170px;
+    grid-area: selections;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 50px; /* 선택 상자 사이의 간격을 조정합니다. */
-    margin-left: 200px;
+    margin-left: 50px;
   }
 
   .selection {
@@ -278,64 +263,6 @@ const Section = styled.section`
     font-size: 14px;
   }
 
-  .linkTodetail {
-    /* contain: style layout inline-size; */
-    grid-area: linkTodetail;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 8vh;
-    margin-top: 130px;
-
-    ul {
-      display: flex;
-      list-style-type: none;
-      gap: 7vw;
-
-      li {
-        a {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          color: white;
-          text-decoration: none;
-
-          svg {
-            width: 100%;
-            font-size: 2rem;
-            transition: 0.3s ease-in-out;
-            margin-bottom: 0.3vw;
-          }
-
-          h3 {
-            font-size: 1rem;
-            font-weight: 400;
-            transition: 0.3s ease-in-out;
-          }
-
-          &:hover {
-            svg {
-              transform: scale(1.1);
-              color: white;
-            }
-
-            h3 {
-              transform: scale(1.1);
-              color: white;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /* @container (min-witdh: 320px) and (max-width:350) {
-            .districtTable {
-                font-size: 15px;
-            }
-    } */
-
   @media screen and (min-width: 320px) and (max-width: 425px) {
     display: grid;
     grid-template-columns: 1fr;
@@ -360,50 +287,37 @@ const Section = styled.section`
         letter-spacing: 0;
       }
     }
+
     .contentMap {
       svg {
         display: none;
       }
     }
 
-    .districtTable {
+    .rankingsLists {
+      grid-area: rankingsLists;
       display: flex;
-      margin: 0;
-      padding: 0;
-      .Table {
-        width: 100%;
-        .column {
-          h3 {
-            color: white;
-            font-size: 1rem;
-          }
-
-          p {
-            font-size: 1.2rem;
-
-            span {
-              font-size: 1rem;
-            }
-          }
-        }
-      }
+      flex-direction: row;
+      gap: 20px;
+      justify-content: space-between; /* 공간 분배로 변경 */
+      align-items: flex-start;
+      width: 100%; /* 부모 요소의 너비에 맞춤 */
+      padding: 0 20px; /* 좌우 패딩을 설정하여 균형 조정 */
+      box-sizing: border-box; /* 패딩을 너비에 포함 */
     }
 
-    .linkTodetail {
+    .rankingsLists > div {
+      flex-grow: 1; /* 리스트 항목들이 가능한 만큼 너비를 차지하게 설정 */
+    }
+
+    .selections {
+      grid-area: selections;
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
-      margin: 0;
-      ul {
-        gap: 1vw;
-        li {
-          a {
-            h3 {
-              font-size: 0.8rem;
-            }
-          }
-        }
-      }
+      gap: 50px; /* 선택 상자 사이의 간격을 조정합니다. */
+      margin-left: 50px; /* 좌측 여백 조정 */
     }
   }
 `;

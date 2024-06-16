@@ -1,0 +1,436 @@
+{
+    "월": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 638,
+            "change_percentage": 96.31
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 36153,
+            "change_percentage": 52.63
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 33757,
+            "change_percentage": 20.69
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "전농2동",
+            "current_population": 58294,
+            "change_percentage": 17.88
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 527644,
+            "change_percentage": 16.65
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 3786,
+            "change_percentage": 15.64
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "내곡동",
+            "current_population": 13763,
+            "change_percentage": 13.77
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "혜화동",
+            "current_population": 1136806,
+            "change_percentage": 12.37
+        },
+        {
+            "자치구_코드_명": "노원구",
+            "행정동_코드_명": "공릉2동",
+            "current_population": 270691,
+            "change_percentage": 11.61
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌2동",
+            "current_population": 541409,
+            "change_percentage": 10.72
+        }
+    ],
+    "화": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 711,
+            "change_percentage": 119.44
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 35175,
+            "change_percentage": 50.69
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 4148,
+            "change_percentage": 25.24
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 33563,
+            "change_percentage": 21.47
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 364108,
+            "change_percentage": 20.39
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 549121,
+            "change_percentage": 20.25
+        },
+        {
+            "자치구_코드_명": "용산구",
+            "행정동_코드_명": "이촌2동",
+            "current_population": 90633,
+            "change_percentage": 14.53
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "전농2동",
+            "current_population": 57720,
+            "change_percentage": 14.52
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "내곡동",
+            "current_population": 14123,
+            "change_percentage": 13.79
+        },
+        {
+            "자치구_코드_명": "성동구",
+            "행정동_코드_명": "사근동",
+            "current_population": 278364,
+            "change_percentage": 11.56
+        }
+    ],
+    "수": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 710,
+            "change_percentage": 115.81
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 35352,
+            "change_percentage": 50.54
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 4227,
+            "change_percentage": 24.47
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 547262,
+            "change_percentage": 21.29
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 373263,
+            "change_percentage": 20.94
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 33319,
+            "change_percentage": 20.3
+        },
+        {
+            "자치구_코드_명": "용산구",
+            "행정동_코드_명": "이촌2동",
+            "current_population": 90249,
+            "change_percentage": 15.77
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "창신1동",
+            "current_population": 488450,
+            "change_percentage": 12.46
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "혜화동",
+            "current_population": 1192878,
+            "change_percentage": 12.39
+        },
+        {
+            "자치구_코드_명": "성동구",
+            "행정동_코드_명": "사근동",
+            "current_population": 279917,
+            "change_percentage": 11.81
+        }
+    ],
+    "목": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 700,
+            "change_percentage": 131.79
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 35281,
+            "change_percentage": 48.97
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 381418,
+            "change_percentage": 27.16
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 4238,
+            "change_percentage": 26.7
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 547686,
+            "change_percentage": 23.43
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 33407,
+            "change_percentage": 20.65
+        },
+        {
+            "자치구_코드_명": "용산구",
+            "행정동_코드_명": "이촌2동",
+            "current_population": 90121,
+            "change_percentage": 15.74
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "혜화동",
+            "current_population": 1188416,
+            "change_percentage": 15.07
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "광희동",
+            "current_population": 1693898,
+            "change_percentage": 14.47
+        },
+        {
+            "자치구_코드_명": "성동구",
+            "행정동_코드_명": "사근동",
+            "current_population": 281953,
+            "change_percentage": 14.39
+        }
+    ],
+    "금": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 673,
+            "change_percentage": 123.59
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 35443,
+            "change_percentage": 51.65
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 4481,
+            "change_percentage": 27.92
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 372621,
+            "change_percentage": 26.9
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 531322,
+            "change_percentage": 24.18
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 34561,
+            "change_percentage": 23.83
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "혜화동",
+            "current_population": 1200217,
+            "change_percentage": 15.98
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "창신1동",
+            "current_population": 479359,
+            "change_percentage": 14.95
+        },
+        {
+            "자치구_코드_명": "용산구",
+            "행정동_코드_명": "이촌2동",
+            "current_population": 90392,
+            "change_percentage": 14.94
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "내곡동",
+            "current_population": 14794,
+            "change_percentage": 14.9
+        }
+    ],
+    "토": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 736,
+            "change_percentage": 184.17
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 38052,
+            "change_percentage": 54.87
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 3773,
+            "change_percentage": 41.36
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 245801,
+            "change_percentage": 27.98
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 38242,
+            "change_percentage": 20.46
+        },
+        {
+            "자치구_코드_명": "용산구",
+            "행정동_코드_명": "이촌2동",
+            "current_population": 97815,
+            "change_percentage": 20.19
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 503320,
+            "change_percentage": 19.82
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "내곡동",
+            "current_population": 13251,
+            "change_percentage": 17.71
+        },
+        {
+            "자치구_코드_명": "성동구",
+            "행정동_코드_명": "사근동",
+            "current_population": 265333,
+            "change_percentage": 14.83
+        },
+        {
+            "자치구_코드_명": "노원구",
+            "행정동_코드_명": "공릉2동",
+            "current_population": 283746,
+            "change_percentage": 14.03
+        }
+    ],
+    "일": [
+        {
+            "자치구_코드_명": "강남구",
+            "행정동_코드_명": "개포1동",
+            "current_population": 718,
+            "change_percentage": 337.8
+        },
+        {
+            "자치구_코드_명": "은평구",
+            "행정동_코드_명": "수색동",
+            "current_population": 39339,
+            "change_percentage": 59.48
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "반포본동",
+            "current_population": 2690,
+            "change_percentage": 34.3
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "소공동",
+            "current_population": 820261,
+            "change_percentage": 19.33
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "명동",
+            "current_population": 558359,
+            "change_percentage": 18.94
+        },
+        {
+            "자치구_코드_명": "중구",
+            "행정동_코드_명": "필동",
+            "current_population": 200503,
+            "change_percentage": 18.3
+        },
+        {
+            "자치구_코드_명": "서대문구",
+            "행정동_코드_명": "남가좌1동",
+            "current_population": 35090,
+            "change_percentage": 17.13
+        },
+        {
+            "자치구_코드_명": "동대문구",
+            "행정동_코드_명": "이문1동",
+            "current_population": 505009,
+            "change_percentage": 14.55
+        },
+        {
+            "자치구_코드_명": "서초구",
+            "행정동_코드_명": "내곡동",
+            "current_population": 12420,
+            "change_percentage": 13.05
+        },
+        {
+            "자치구_코드_명": "종로구",
+            "행정동_코드_명": "창신1동",
+            "current_population": 416570,
+            "change_percentage": 12.8
+        }
+    ]
+}
