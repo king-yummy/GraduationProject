@@ -3,14 +3,21 @@ import styled from "styled-components";
 
 const getArrow = (changePercentage) => {
   if (changePercentage > 0) {
-    return '▲';
+    return "▲";
   } else if (changePercentage < 0) {
-    return '▼';
+    return "▼";
   }
-  return '-';
+  return "-";
 };
 
-const RankingItem = ({ rank, district, neighborhood, value, changePercentage, type }) => {
+const RankingItem = ({
+  rank,
+  district,
+  neighborhood,
+  value,
+  changePercentage,
+  type,
+}) => {
   const isIncrease = changePercentage > 0;
 
   // 유동인구와 매출 데이터를 구분하여 표시
@@ -42,22 +49,28 @@ const Item = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 0px;
+  background: #0e092dcc;
   border-radius: 5px;
   max-width: 100%;
 
   span {
     flex: 1;
     text-align: center;
+    font-size: 13px;
     &:first-child {
       flex: 0.5;
     }
   }
+
+  
 `;
 
+
+
 const ChangePercentage = styled.span`
-  width: 20%;
   text-align: center;
-  color: ${({ isIncrease }) => (isIncrease ? 'rgba(255, 99, 71, 0.7)' : 'rgba(70, 130, 180, 0.7)')};
+  color: ${({ isIncrease }) =>
+    isIncrease ? "rgba(255, 99, 71, 0.7)" : "rgba(70, 130, 180, 0.7)"};
+  font-size: 10px !important;
 `;

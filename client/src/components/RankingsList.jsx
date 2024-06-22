@@ -70,19 +70,20 @@ const List = styled.ul`
 const MenuBar = styled.div`
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
+  padding: 10px 0 0 0;
   border-radius: 5px;
 `;
 
 const MenuItem = styled.button`
   flex: 1;
   background: ${({ isActive }) => (isActive ? "#61dafb" : "transparent")};
-  border: none;
+  border: 1px solid #ffffffcc;
   color: ${({ isActive }) => (isActive ? "#282c34" : "#ffffff")};
   font-size: 16px;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
   transition: background 0.3s;
+  height: 38px;
 
   &:hover {
     background: #61dafb;
