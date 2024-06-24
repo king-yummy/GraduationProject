@@ -6,15 +6,15 @@ const Map = (props) => (
     style={{
       overflow: "visible",
     }}
-    height="auto"
-    width="300px"
+    height="250px"
+    width="280px"
     viewBox="150 130 400 400"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <style>
       {
-        "\r\n.OUTLINE {\r\n    stroke-linejoin:round;\r\n    stroke: #ffffff;\r\n    stroke-width: 2;\r\n    fill: #363636;\r\n}\r\n.OUTLINE:hover{\r\n  fill: #fcfcfc;\r\n}\r\n.LINE {\r\n stroke-linejoin:round;\r\n    stroke: #ffffff;\r\n    stroke-width: 1;\r\n    fill: none;\r\n}\r\n.POINT {\r\n    stroke: #ffffff;\r\n stroke-width: 1;\r\n fill: #ffffff;\r\n}\r\n.TEXT {\r\n  fill: #888888;\r\n font-size: 16px;\r\n text-anchor: middle;\r\n    alignment-baseline: middle;\r\n}\r\n\r\n"
+        "\r\n.OUTLINE {\r\n    stroke-linejoin:round;\r\n    stroke: #ffffff;\r\n    stroke-width: 2;\r\n    fill: #5d56889c;\r\n}\r\n.OUTLINE:hover{\r\n  fill: #fcfcfc;\r\n}\r\n.LINE {\r\n stroke-linejoin:round;\r\n    stroke: #ffffff;\r\n    stroke-width: 1;\r\n    fill: none;\r\n}\r\n.POINT {\r\n    stroke: #ffffff;\r\n stroke-width: 1;\r\n fill: #ffffff;\r\n}\r\n.TEXT {\r\n  fill: #e4e4ee;\r\n font-size: 16px;\r\n text-anchor: middle;\r\n    alignment-baseline: middle;\r\n}\r\n\r\n"
       }
 
     </style>

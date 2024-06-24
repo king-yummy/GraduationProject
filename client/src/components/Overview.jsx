@@ -1,6 +1,7 @@
+// src/components/Overview.jsx
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import mainSeoul from "../assets/images/mainSeoul.jpg";
 import cityData from "../assets/data/updated_data_sorted.json";
 import Map from "./seoulMap";
@@ -9,9 +10,12 @@ import populationRankingsData from "../assets/data/유동인구_top10.json";
 import salesChangeRankingsData from "../assets/data/매출_변화량_top10_by_category.json";
 import axios from "axios";
 
-export default function Overview(props) {
+export default function Overview() {
   const navigate = useNavigate();
-  const [cityId, setCityId] = useState(1);
+  const { cityId } = useParams();
+  const [cityIdState, setCityIdState] = useState(
+    cityId ? parseInt(cityId, 10) : 1
+  );
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedIndustry, setSelectedIndustry] = useState("");
   const [populationRankingsByDay, setPopulationRankingsByDay] = useState({});
@@ -23,7 +27,7 @@ export default function Overview(props) {
   const [currentNewsIndex, setCurrentNewsIndex] = useState(0); // 현재 뉴스 인덱스
   const [loading, setLoading] = useState(false);
 
-  const cityInfo = cityData.find((cityInfo) => cityInfo.id === cityId);
+  const cityInfo = cityData.find((cityInfo) => cityInfo.id === cityIdState);
 
   const industryOptions = [
     "식료품",
@@ -37,12 +41,6 @@ export default function Overview(props) {
     "교육",
     "스포츠_및_오락관련_서비스업",
   ];
-
-  useEffect(() => {
-    if (props.cityId) {
-      setCityId(parseInt(props.cityId, 10));
-    }
-  }, [props.cityId]);
 
   useEffect(() => {
     setPopulationRankingsByDay(populationRankingsData);
@@ -67,12 +65,13 @@ export default function Overview(props) {
 
         // 첫 번째 뉴스 링크와 제목 추출
         const newsElements = [
-          "#sp_nws4 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
+          "#sp_nws1 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
           "#sp_nws5 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
           "#sp_nws6 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
-          "#sp_nws7 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
           "#sp_nws8 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
-          "#sp_nws9 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
+          "#sp_nws11 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
+          "#sp_nws13 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
+          "#sp_nws14 > div.news_wrap.api_ani_send > div > div.news_contents > a.news_tit",
         ];
 
         const newsData = newsElements
@@ -130,6 +129,10 @@ export default function Overview(props) {
     });
   };
 
+  const handleFranchiseButtonClick = () => {
+    navigate("/franchise");
+  };
+
   if (
     Object.keys(populationRankingsByDay).length === 0 ||
     Object.keys(salesChangeRankingsByCategory).length === 0
@@ -149,10 +152,13 @@ export default function Overview(props) {
             ? "Loading..."
             : currentNews
             ? currentNews.title
-            : "뉴스 제목을 불러올 수 없습니다."}{" "}
-          {/* 변경 */}
+            : "뉴스 제목을 불러올 수 없습니다."}
         </span>
       </ClickableBanner>
+
+      <FranchiseButton onClick={handleFranchiseButtonClick}>
+        프랜차이즈 분석
+      </FranchiseButton>
 
       <div className="districtName">
         <StyledH2 key={cityInfo.id}>{cityInfo.title}</StyledH2>
@@ -259,6 +265,21 @@ const ClickableBanner = styled.div`
 
   span {
     font-weight: bold;
+  }
+`;
+
+const FranchiseButton = styled.button`
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 20px;
+
+  &:hover {
+    background-color: #218838;
   }
 `;
 
