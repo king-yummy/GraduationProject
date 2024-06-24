@@ -5,6 +5,16 @@ import StoreCountAnalysis from "./StoreCountAnalysis";
 import OpenCloseAnalysis from "./OpenCloseAnalysis";
 import FranchiseAnalysis from "./FranchiseAnalysis";
 import SurvivalRateAnalysis from "./SurvivalRateAnalysis";
+import PopulationAnalysis from "./PopulationAnalysis";
+import WeekPopulationAnalysis from "./WeekPopulationAnalysis";
+import LivingPopulationAnalysis from "./LivingPopulationAnalysis";
+import WorkingPopulationAnalysis from "./WorkingPopulationAnalysis";
+import SalesAnalysis from "./SalesAnalysis";
+import WeekSalesAnalysis from "./WeekSalesAnalysis";
+import GenderSalesAnalysis from "./GenderSalesAnalysis";
+import AgeSalesAnalysis from "./AgeSalesAnalysis";
+import TopSalesAnalysis from "./TopSalesAnalysis";
+import IncomeAnalysis from "./IncomeAnalysis";
 
 const ReportPage = () => {
   const location = useLocation();
@@ -40,6 +50,53 @@ const ReportPage = () => {
           selectedDistrict={selectedDistrict}
           selectedIndustry={selectedIndustry}
         />
+        <PopulationAnalysis
+          csvPath="/assets/data/stay_live_work.csv"
+          selectedDistrict={selectedDistrict}
+          cityInfo={cityInfo.title}
+        />
+        <WeekPopulationAnalysis
+          csvPath="/assets/data/stay_live_work.csv"
+          selectedDistrict={selectedDistrict}
+        />
+        <LivingPopulationAnalysis
+          csvPath="/assets/data/stay_live_work.csv"
+          selectedDistrict={selectedDistrict}
+        />
+        <WorkingPopulationAnalysis
+          csvPath="/assets/data/stay_live_work.csv"
+          selectedDistrict={selectedDistrict}
+        />
+        <TopSalesAnalysis
+          csvPath="/assets/data/매출.csv"
+          selectedDistrict={selectedDistrict}
+        />
+        <SalesAnalysis
+          csvPath="/assets/data/매출.csv"
+          selectedDistrict={selectedDistrict}
+          cityInfo={cityInfo.title}
+          selectedIndustry={selectedIndustry}
+        />
+        <WeekSalesAnalysis
+          csvPath="/assets/data/매출.csv"
+          selectedDistrict={selectedDistrict}
+          selectedIndustry={selectedIndustry}
+        />
+        <GenderSalesAnalysis
+          csvPath="/assets/data/매출.csv"
+          selectedDistrict={selectedDistrict}
+          selectedIndustry={selectedIndustry}
+        />
+        <AgeSalesAnalysis
+          csvPath="/assets/data/매출.csv"
+          selectedDistrict={selectedDistrict}
+          selectedIndustry={selectedIndustry}
+        />
+        <IncomeAnalysis
+          csvPath="/assets/data/상권변화지표_소득소비(상권).csv"
+          selectedDistrict={selectedDistrict}
+          cityInfo={cityInfo.title}
+        />
       </Content>
     </ReportContainer>
   );
@@ -61,7 +118,7 @@ const Header = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: stretch;
 `;
 
 const Row = styled.div`
