@@ -15,6 +15,7 @@ import GenderSalesAnalysis from "./GenderSalesAnalysis";
 import AgeSalesAnalysis from "./AgeSalesAnalysis";
 import TopSalesAnalysis from "./TopSalesAnalysis";
 import IncomeAnalysis from "./IncomeAnalysis";
+import ZigbangStoreAnalysis from "./ZigbangStoreAnalysis";
 
 const ReportPage = () => {
   const location = useLocation();
@@ -97,6 +98,7 @@ const ReportPage = () => {
           selectedDistrict={selectedDistrict}
           cityInfo={cityInfo.title}
         />
+        <ZigbangStoreAnalysis gu={cityInfo?.title} dong={selectedDistrict || ""}/>
       </Content>
     </ReportContainer>
   );
