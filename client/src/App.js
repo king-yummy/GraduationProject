@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ES from './components/analysis/ES';
-import Facility from './components/analysis/Facility';
-import Population from './components/analysis/Population';
-import Revenue from './components/analysis/Revenue';
-import Sector from './components/analysis/Sector';
-import Summary from './components/analysis/Summary';
-import Footer from './components/Footer';
-import NavBar from './components/NavBar';
 import Overview from './components/Overview';
-import ScrollToTop from './components/ScrollToTop';
+
 
 const CITY_IDS = [
   '11740', '11710', '11680', '11650', '11620', '11590', '11560', '11545',
@@ -31,16 +23,7 @@ export default function App() {
 
   return (
     <div>
-      <ScrollToTop/>
-      <NavBar/>
       <Overview cityId={cityId}/>
-      <Summary cityId={cityId}/>
-      <Revenue cityId={cityId}/>
-      <Population cityId={cityId}/>
-      <Sector cityId={cityId}/>
-      <Facility cityId={cityId}/>
-      <ES cityId={cityId}/>
-      <Footer/>
     </div>
     
   );

@@ -16,6 +16,9 @@ import AgeSalesAnalysis from "./AgeSalesAnalysis";
 import TopSalesAnalysis from "./TopSalesAnalysis";
 import IncomeAnalysis from "./IncomeAnalysis";
 import ZigbangStoreAnalysis from "./ZigbangStoreAnalysis";
+import { Chart, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
+Chart.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
 
 const ReportPage = () => {
   const location = useLocation();
