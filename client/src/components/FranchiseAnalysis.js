@@ -86,6 +86,7 @@ const FranchiseAnalysis = () => {
   }, [selectedCost, selectedCategory, data]);
 
   const categoryEmojis = {
+    "전체": "🌐",
     "음식점": "🍴",
     "주점/카페": "☕",
     "치킨/피자": "🍕",
@@ -98,7 +99,7 @@ const FranchiseAnalysis = () => {
 
   return (
     <Container>
-      <h1>프랜차이즈 분석</h1>
+      <h1>프랜차이즈 리스트</h1>
       <FilterAndDataContainer>
         <FilterTableContainer>
           <FilterTable>
@@ -148,11 +149,16 @@ const FranchiseAnalysis = () => {
           {filteredData.length > 0 ? (
             filteredData.map((item, index) => (
               <Card key={index}>
+                <CardImage
+                  src={`/assets/images/${item.brand_name}.jpg`}
+                  alt={item.brand_name}
+                  onError={(e) => e.target.style.display = 'none'} // 이미지가 없을 때 흰색 배경
+                />
                 <CardContent>
                   <h3>{item.brand_name}</h3>
                   <p>{item.category} · {item.store_count}개</p>
-                  <p><GrayText>창업비용:</GrayText> <BoldText>{item.initial_cost} 만원</BoldText></p>
-                  <p><GrayText>인테리어비용:</GrayText> <BoldText>{item.interior_cost} 만원</BoldText></p>
+                  <p><GrayText>창업비용:</GrayText> <BoldText>{item.initial_cost} 만 원</BoldText></p>
+                  <p><GrayText>인테리어비용:</GrayText> <BoldText>{item.interior_cost} 만 원</BoldText></p>
                 </CardContent>
               </Card>
             ))
@@ -177,6 +183,7 @@ const Container = styled.div`
 `;
 
 const FilterAndDataContainer = styled.div`
+  margin-top: 20px;
   width: 100%;
 `;
 
@@ -253,6 +260,12 @@ const Card = styled.div`
   width: calc(25% - 20px); /* 카드의 너비를 25%로 설정하고, 간격을 고려하여 조정 */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* 카드 사이의 간격 추가 */
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
 `;
 
 const CardContent = styled.div`
