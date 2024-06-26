@@ -6,6 +6,7 @@ import Papa from "papaparse";
 
 const WeekSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
   const [weekChartData, setWeekChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const WeekSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
     ];
 
     const dataExtracted = data
-      .filter(d => d["category20"] === selectedIndustry)
+      .filter((d) => d["category20"] === selectedIndustry)
       .map((d) => ({
         자치구_코드_명: d["자치구_코드_명"],
         행정동_코드_명: d["행정동_코드_명"],
@@ -119,14 +120,23 @@ const WeekSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
 
       // Calculate the trend message
       const maxDay = labels[maxIndex];
-      setTrendMessage(
-        `가장 많은 매출이 발생하는 요일은 ${maxDay}입니다.`
-      );
+      setCountMessage(`${maxDay}에 매출이 가장 많습니다.`);
+
+      if (["월요일", "화요일", "수요일", "목요일", "금요일"].includes(maxDay)) {
+        setTrendMessage(
+          `${selectedDistrict}에서 ${selectedIndustry} 상권은 평일 고객이 중요하므로, 고정고객 확보에 유의하세요.`
+        );
+      } else {
+        setTrendMessage(
+          `${selectedDistrict}에서 ${selectedIndustry} 상권은 주말 고객과 원거리 고객을 위한 마케팅이 중요합니다.`
+        );
+      }
     }
   };
 
   return (
     <AnalysisContainer>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {weekChartData && (
@@ -146,7 +156,11 @@ WeekSalesAnalysis.propTypes = {
 export default WeekSalesAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -154,9 +168,15 @@ const ChartContainer = styled.div`
   height: 400px;
 `;
 
+const CountMessage = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+`;
+
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
 `;
