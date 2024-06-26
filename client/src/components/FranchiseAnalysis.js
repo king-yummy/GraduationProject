@@ -17,7 +17,7 @@ const FranchiseAnalysis = () => {
       const csv = decoder.decode(result.value);
       const parsedData = Papa.parse(csv, { header: true });
       console.log("Parsed Data:", parsedData.data); // 데이터 확인
-      const slicedData = parsedData.data.slice(0, 100); // 처음 100개 데이터만 사용
+      const slicedData = parsedData.data.slice(0, 500); // 처음 500개 데이터만 사용
       setData(slicedData);
       setFilteredData(slicedData); // 초기 필터링된 데이터는 슬라이싱된 데이터와 동일
     };
@@ -99,7 +99,7 @@ const FranchiseAnalysis = () => {
 
   return (
     <Container>
-      <h1>프랜차이즈 리스트</h1>
+      <h1>프랜차이즈 분석</h1>
       <FilterAndDataContainer>
         <FilterTableContainer>
           <FilterTable>
@@ -152,13 +152,13 @@ const FranchiseAnalysis = () => {
                 <CardImage
                   src={`/assets/images/${item.brand_name}.jpg`}
                   alt={item.brand_name}
-                  onError={(e) => e.target.style.display = 'none'} // 이미지가 없을 때 흰색 배경
+                  onError={(e) => e.target.src = '/assets/logo.png'} // 이미지가 없을 때 로고로 대체
                 />
                 <CardContent>
                   <h3>{item.brand_name}</h3>
                   <p>{item.category} · {item.store_count}개</p>
-                  <p><GrayText>창업비용:</GrayText> <BoldText>{item.initial_cost} 만 원</BoldText></p>
-                  <p><GrayText>인테리어비용:</GrayText> <BoldText>{item.interior_cost} 만 원</BoldText></p>
+                  <p><GrayText>창업비용:</GrayText> <BoldText>{item.initial_cost} 만원</BoldText></p>
+                  <p><GrayText>인테리어비용:</GrayText> <BoldText>{item.interior_cost} 만원</BoldText></p>
                 </CardContent>
               </Card>
             ))
@@ -183,7 +183,6 @@ const Container = styled.div`
 `;
 
 const FilterAndDataContainer = styled.div`
-  margin-top: 20px;
   width: 100%;
 `;
 
