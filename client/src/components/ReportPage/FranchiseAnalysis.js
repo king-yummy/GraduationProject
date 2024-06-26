@@ -86,6 +86,7 @@ const AnalysisContainer = styled.div`
   flex-direction: column; // 세로로 정렬
   justify-content: flex-end; // 하단 정렬
   align-items: center; // 중앙 정렬 (가로)
+  width: 50%;
 `;
 
 const ChartContainer = styled.div`

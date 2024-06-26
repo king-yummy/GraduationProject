@@ -27,22 +27,28 @@ const OpenCloseAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
 
             const openCounts = filteredData.reduce((acc, curr) => {
               const quarter = curr.기준_년분기_코드;
-              acc[quarter] = (acc[quarter] || 0) + parseInt(curr.개업_점포_수, 10);
+              acc[quarter] =
+                (acc[quarter] || 0) + parseInt(curr.개업_점포_수, 10);
               return acc;
             }, {});
 
             const closeCounts = filteredData.reduce((acc, curr) => {
               const quarter = curr.기준_년분기_코드;
-              acc[quarter] = (acc[quarter] || 0) + parseInt(curr.폐업_점포_수, 10);
+              acc[quarter] =
+                (acc[quarter] || 0) + parseInt(curr.폐업_점포_수, 10);
               return acc;
             }, {});
 
             const quarters = Object.keys(openCounts).sort();
 
-            const latestOpenCounts = openCounts[quarters[quarters.length - 1]] || 0;
-            const previousOpenCounts = openCounts[quarters[quarters.length - 2]] || 0;
-            const latestCloseCounts = closeCounts[quarters[quarters.length - 1]] || 0;
-            const previousCloseCounts = closeCounts[quarters[quarters.length - 2]] || 0;
+            const latestOpenCounts =
+              openCounts[quarters[quarters.length - 1]] || 0;
+            const previousOpenCounts =
+              openCounts[quarters[quarters.length - 2]] || 0;
+            const latestCloseCounts =
+              closeCounts[quarters[quarters.length - 1]] || 0;
+            const previousCloseCounts =
+              closeCounts[quarters[quarters.length - 2]] || 0;
 
             setLatestOpenCounts(latestOpenCounts);
             setLatestCloseCounts(latestCloseCounts);
@@ -119,18 +125,32 @@ const OpenCloseAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
   }, [csvPath, selectedDistrict, selectedIndustry]);
 
   return (
-    <AnalysisContainer>
-      <CountMessage>개업수는 {latestOpenCounts}개 입니다.</CountMessage>
-      <TrendMessage>{changingCountMessage}</TrendMessage>
-      <ChartContainer>
-        {openChartData && <Bar data={openChartData} options={{ maintainAspectRatio: false }} />}
-      </ChartContainer>
-      <CountMessage>폐업수는 {latestCloseCounts}개 입니다.</CountMessage>
-      <TrendMessage>{changingCountMessage}</TrendMessage>
-      <ChartContainer>
-        {closeChartData && <Bar data={closeChartData} options={{ maintainAspectRatio: false }} />}
-      </ChartContainer>
-    </AnalysisContainer>
+    <div>
+      <AnalysisContainer>
+        <CountMessage>개업수는 {latestOpenCounts}개 입니다.</CountMessage>
+        <TrendMessage>{changingCountMessage}</TrendMessage>
+        <ChartContainer>
+          {openChartData && (
+            <Bar
+              data={openChartData}
+              options={{ maintainAspectRatio: false }}
+            />
+          )}
+        </ChartContainer>
+      </AnalysisContainer>
+      <AnalysisContainer>
+        <CountMessage>폐업수는 {latestCloseCounts}개 입니다.</CountMessage>
+        <TrendMessage>{changingCountMessage}</TrendMessage>
+        <ChartContainer>
+          {closeChartData && (
+            <Bar
+              data={closeChartData}
+              options={{ maintainAspectRatio: false }}
+            />
+          )}
+        </ChartContainer>
+      </AnalysisContainer>
+    </div>
   );
 };
 
@@ -142,8 +162,16 @@ OpenCloseAnalysis.propTypes = {
 
 export default OpenCloseAnalysis;
 
+const div = styled.div`
+  display: flex;
+`;
+
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -154,14 +182,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

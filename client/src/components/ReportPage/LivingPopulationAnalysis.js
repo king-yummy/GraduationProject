@@ -6,8 +6,24 @@ import Papa from "papaparse";
 
 const LivingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
   const [chartData, setChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
   const ageGroups = ["10대", "20대", "30대", "40대", "50대", "60대 이상"];
+
+  const recommendationMessages = {
+    "남성10대": "젊고 활기찬 분위기의 매장 분위기를 추천합니다.",
+    "여성10대": "트렌디하고 감각적인 매장 분위기를 추천합니다.",
+    "남성20대": "스타일리시하고 현대적인 느낌의 매장 분위기를 추천합니다.",
+    "여성20대": "트렌디하면서도 감각적인 매장 분위기를 추천합니다.",
+    "남성30대": "실용적이고 효율적인 매장 분위기를 추천합니다.",
+    "여성30대": "퀄리티 좋고 심미적인 컨셉의 매장 분위기를 추천합니다.",
+    "남성40대": "가족 친화적이고 편안한 매장 분위기를 추천합니다.",
+    "여성40대": "건강과 웰빙을 강조하는 매장 분위기를 추천합니다.",
+    "남성50대": "전통적이고 신뢰할 수 있는 매장 분위기를 추천합니다.",
+    "여성50대": "안정적이고 편안한 느낌의 매장 분위기를 추천합니다.",
+    "남성60대 이상": "편안하고 접근성 좋은 매장 분위기를 추천합니다.",
+    "여성60대 이상": "편안하고 여유로운 매장 분위기를 추천합니다."
+  };
 
   useEffect(() => {
     Papa.parse(csvPath, {
@@ -32,11 +48,12 @@ const LivingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
     const summedData = relevantData.reduce(
       (acc, cur) => {
         ageGroups.forEach((age, index) => {
-          acc[`남성${age}`] += +cur[`남성연령대_${index + 1}0_상주인구_수`] || 0;
-          acc[`여성${age}`] += +cur[`여성연령대_${index + 1}0_상주인구_수`] || 0;
+          const maleKey = index === 5 ? `남성연령대_60_이상_상주인구_수` : `남성연령대_${index + 1}0_상주인구_수`;
+          const femaleKey = index === 5 ? `여성연령대_60_이상_상주인구_수` : `여성연령대_${index + 1}0_상주인구_수`;
+
+          acc[`남성${age}`] += +cur[maleKey] || 0;
+          acc[`여성${age}`] += +cur[femaleKey] || 0;
         });
-        acc["남성60대 이상"] += +cur["남성연령대_60_이상_상주인구_수"] || 0;
-        acc["여성60대 이상"] += +cur["여성연령대_60_이상_상주인구_수"] || 0;
         return acc;
       },
       ageGroups.reduce(
@@ -45,7 +62,7 @@ const LivingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
           [`남성${age}`]: 0,
           [`여성${age}`]: 0,
         }),
-        { "남성60대 이상": 0, "여성60대 이상": 0 }
+        {}
       )
     );
 
@@ -53,23 +70,33 @@ const LivingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
       남성: ageGroups.reduce((sum, age) => sum + summedData[`남성${age}`], 0),
       여성: ageGroups.reduce((sum, age) => sum + summedData[`여성${age}`], 0),
     };
-    totalPopulation["남성"] += summedData["남성60대 이상"];
-    totalPopulation["여성"] += summedData["여성60대 이상"];
 
     const percentages = ageGroups.map((age) => ({
       남성: (summedData[`남성${age}`] / totalPopulation["남성"]) * 100,
       여성: (summedData[`여성${age}`] / totalPopulation["여성"]) * 100,
     }));
-    percentages.push({
-      남성: (summedData["남성60대 이상"] / totalPopulation["남성"]) * 100,
-      여성: (summedData["여성60대 이상"] / totalPopulation["여성"]) * 100,
-    });
 
-    const maleMaxIndex = percentages.map(p => p.남성).indexOf(Math.max(...percentages.map(p => p.남성)));
-    const femaleMaxIndex = percentages.map(p => p.여성).indexOf(Math.max(...percentages.map(p => p.여성)));
+    const maleMaxIndex = percentages
+      .map((p) => p.남성)
+      .indexOf(Math.max(...percentages.map((p) => p.남성)));
+    const femaleMaxIndex = percentages
+      .map((p) => p.여성)
+      .indexOf(Math.max(...percentages.map((p) => p.여성)));
 
-    const trendMessage = `여성, ${ageGroups[femaleMaxIndex]} 주거인구가 가장 많아요.`;
-    
+    const maleMaxPercentage = percentages[maleMaxIndex].남성;
+    const femaleMaxPercentage = percentages[femaleMaxIndex].여성;
+
+    let countMessage;
+    let trendMessage;
+    if (maleMaxPercentage > femaleMaxPercentage) {
+      countMessage = `주거인구는 ${ageGroups[maleMaxIndex]}의 남성이 가장 많습니다.`;
+      trendMessage = recommendationMessages[`남성${ageGroups[maleMaxIndex]}`];
+    } else {
+      countMessage = `주거인구는 ${ageGroups[femaleMaxIndex]}의 여성이 가장 많습니다.`;
+      trendMessage = recommendationMessages[`여성${ageGroups[femaleMaxIndex]}`];
+    }
+
+    setCountMessage(countMessage);
     setTrendMessage(trendMessage);
 
     setChartData({
@@ -95,7 +122,7 @@ const LivingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
 
   return (
     <AnalysisContainer>
-      <CountMessage>{selectedDistrict} 성별, 연령별 주거인구</CountMessage>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {chartData && (
@@ -133,7 +160,11 @@ LivingPopulationAnalysis.propTypes = {
 export default LivingPopulationAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -144,14 +175,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

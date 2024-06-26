@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import { Bar } from "react-chartjs-2";
 import styled from "styled-components";
 import Papa from "papaparse";
+import { count } from "d3";
 
 const WorkingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
   const [chartData, setChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
   const ageGroups = ["10대", "20대", "30대", "40대", "50대", "60대 이상"];
 
@@ -32,8 +34,10 @@ const WorkingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
     const summedData = relevantData.reduce(
       (acc, cur) => {
         ageGroups.forEach((age, index) => {
-          acc[`남성${age}`] += +cur[`남성연령대_${index + 1}0_직장_인구_수`] || 0;
-          acc[`여성${age}`] += +cur[`여성연령대_${index + 1}0_직장_인구_수`] || 0;
+          acc[`남성${age}`] +=
+            +cur[`남성연령대_${index + 1}0_직장_인구_수`] || 0;
+          acc[`여성${age}`] +=
+            +cur[`여성연령대_${index + 1}0_직장_인구_수`] || 0;
         });
         acc["남성60대 이상"] += +cur["남성연령대_60_이상_직장_인구_수"] || 0;
         acc["여성60대 이상"] += +cur["여성연령대_60_이상_직장_인구_수"] || 0;
@@ -65,12 +69,34 @@ const WorkingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
       여성: (summedData["여성60대 이상"] / totalPopulation["여성"]) * 100,
     });
 
-    const maleMaxIndex = percentages.map(p => p.남성).indexOf(Math.max(...percentages.map(p => p.남성)));
-    const femaleMaxIndex = percentages.map(p => p.여성).indexOf(Math.max(...percentages.map(p => p.여성)));
+    const maleMaxIndex = percentages
+      .map((p) => p.남성)
+      .indexOf(Math.max(...percentages.map((p) => p.남성)));
+    const femaleMaxIndex = percentages
+      .map((p) => p.여성)
+      .indexOf(Math.max(...percentages.map((p) => p.여성)));
 
-    const trendMessage = `여성, ${ageGroups[femaleMaxIndex]} 직장인구가 가장 많아요.`;
-    
-    setTrendMessage(trendMessage);
+    let countMessage = "";
+    if (percentages[maleMaxIndex].남성 > percentages[femaleMaxIndex].여성) {
+      countMessage = `${ageGroups[maleMaxIndex]} 남성 직장인구가 가장 많습니다.`;
+      setTrendMessage(
+        `${selectedDistrict} 상권에서는 ${ageGroups[maleMaxIndex]} 남성 직장인을 유의하세요.`
+      );
+    } else if (
+      percentages[maleMaxIndex].남성 < percentages[femaleMaxIndex].여성
+    ) {
+      countMessage = `${ageGroups[femaleMaxIndex]} 여성 직장인구가 가장 많습니다.`;
+      setTrendMessage(
+        `${selectedDistrict} 상권에서는 ${ageGroups[femaleMaxIndex]} 여성 직장인을 유의하세요.`
+      );
+    } else {
+      countMessage = `${ageGroups[maleMaxIndex]} 남성과 ${ageGroups[femaleMaxIndex]} 여성의 직장인구가 가장 많습니다.`;
+      setTrendMessage(
+        `${selectedDistrict} 상권에서는 ${ageGroups[maleMaxIndex]} 남성 직장인과 ${ageGroups[femaleMaxIndex]} 여성 직장인을 유의하세요.`
+      );
+    }
+
+    setCountMessage(countMessage);
 
     setChartData({
       labels: ageGroups,
@@ -95,7 +121,7 @@ const WorkingPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
 
   return (
     <AnalysisContainer>
-      <CountMessage>{selectedDistrict} 성별, 연령별 직장인구</CountMessage>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {chartData && (
@@ -132,8 +158,16 @@ WorkingPopulationAnalysis.propTypes = {
 
 export default WorkingPopulationAnalysis;
 
+const div = styled.div`
+  display: flex;
+`;
+
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -144,14 +178,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

@@ -224,17 +224,19 @@ const Error = styled.div`
   padding: 20px;
 `;
 
+const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+`;
+
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
-`;
-
-const AnalysisContainer = styled.div`
-  flex: 1;
-  margin-bottom: 20px;
+  margin: 0 0 30px 0;
 `;
 
 const AverageContainer = styled.div`
@@ -247,7 +249,7 @@ const AverageContainer = styled.div`
 const AverageItem = styled.div`
   font-size: 24px;
   font-weight: bold;
-  color: #000;
+  color: red;
   display: flex;
   flex-direction: column;
   align-items: center;

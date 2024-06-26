@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const AgeSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
   const [ageChartData, setAgeChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -59,14 +60,7 @@ const AgeSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
         0
       );
 
-      const labels = [
-        "10대",
-        "20대",
-        "30대",
-        "40대",
-        "50대",
-        "60대 이상",
-      ];
+      const labels = ["10대", "20대", "30대", "40대", "50대", "60대 이상"];
       const dataValues = Object.values(summedData).map(
         (value) => (value / totalSales) * 100
       );
@@ -93,12 +87,34 @@ const AgeSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
       });
 
       const maxAgeGroup = labels[maxIndex];
-      setTrendMessage(`선택 상권의 ${selectedIndustry} 업종에서는 ${maxAgeGroup}(${dataValues[maxIndex].toFixed(1)}%)가 가장 높은 매출을 보입니다.`);
+      setCountMessage(
+        `${selectedDistrict}의 ${selectedIndustry} 업종에서는 ${maxAgeGroup}(${dataValues[
+          maxIndex
+        ].toFixed(1)}%)가 가장 높은 매출을 보입니다.`
+      );
+
+      const trendMessages = {
+        "10대":
+          "학생들의 트렌드에 맞춰 마케팅을 진행하세요. 최신 유행 아이템과 SNS를 적극 활용하는 것이 좋습니다.",
+        "20대":
+          "젊은 직장인과 대학생들을 겨냥한 트렌디한 상품과 프로모션을 기획하세요. 온라인 마케팅과 모바일 앱 활용을 고려해 보세요.",
+        "30대":
+          "안정적인 소득을 가진 이들을 위해 품질 좋은 제품과 서비스 제공이 중요합니다. 가성비를 강조하는 전략이 효과적일 수 있습니다.",
+        "40대":
+          "가족 단위 고객을 타겟으로 한 다양한 상품과 서비스를 제공하세요. 주차 시설과 가족 친화적인 환경을 강조하는 것이 좋습니다.",
+        "50대":
+          "건강과 웰빙에 관심이 많은 이들을 위해 관련 상품과 서비스를 강화하세요. 충성 고객을 위한 혜택 프로그램도 고려해 보세요.",
+        "60대 이상":
+          "은퇴 후 여유를 즐기는 고객을 위해 편안하고 여유로운 쇼핑 환경을 조성하세요. 노인 친화적인 제품과 서비스를 제공하는 것이 중요합니다.",
+      };
+
+      setTrendMessage(trendMessages[maxAgeGroup]);
     }
   };
 
   return (
     <AnalysisContainer>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {ageChartData && (
@@ -144,7 +160,11 @@ AgeSalesAnalysis.propTypes = {
 export default AgeSalesAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -152,9 +172,16 @@ const ChartContainer = styled.div`
   height: 400px;
 `;
 
+const CountMessage = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+`;
+
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

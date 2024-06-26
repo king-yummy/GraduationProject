@@ -79,7 +79,7 @@ export default function Overview(props) {
   return (
     <Section>
       <LogoContainer>
-        <img src={logo}/>
+        <img src={logo} />
       </LogoContainer>
 
       <NewsBanner />
@@ -152,6 +152,9 @@ export default function Overview(props) {
             value={selectedIndustry}
             onChange={handleIndustryChange}
           >
+            <option value="" disabled>
+              전체 업종
+            </option>
             {industryOptions.map((industry, index) => (
               <option key={index} value={industry}>
                 {industry}

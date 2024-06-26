@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const TopSalesAnalysis = ({ csvPath, selectedDistrict }) => {
   const [chartData, setChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -46,11 +47,11 @@ const TopSalesAnalysis = ({ csvPath, selectedDistrict }) => {
         .filter(([, value]) => value > 0);
 
       const filteredCategories = sortedCategories.filter(
-        ([, value]) => (value / totalSum) * 100 > 10
+        ([, value]) => (value / totalSum) * 100 > 5
       );
 
       const othersSum = sortedCategories
-        .filter(([, value]) => (value / totalSum) * 100 <= 10)
+        .filter(([, value]) => (value / totalSum) * 100 <= 5)
         .reduce((acc, [, value]) => acc + value, 0);
 
       if (othersSum > 0) {
@@ -77,15 +78,18 @@ const TopSalesAnalysis = ({ csvPath, selectedDistrict }) => {
         ],
       });
 
-      setTrendMessage(
-        `${selectedDistrict}의 주요 업종별 매출`
-      );
+      setCountMessage(`${selectedDistrict}의 주요 업종별 매출`);
+
+      // 매출 상위 3개 업종 추출
+      const top3Categories = sortedCategories.slice(0, 3).map(([key]) => key);
+      setTrendMessage(`${selectedDistrict}에서는 ${top3Categories.join("/")} 업종의 매출이 가장 높습니다.`);
     }
   };
 
   return (
     <AnalysisContainer>
-      <CountMessage>{trendMessage}</CountMessage>
+      <CountMessage>{countMessage}</CountMessage>
+      <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {chartData && (
           <Pie
@@ -128,7 +132,11 @@ TopSalesAnalysis.propTypes = {
 export default TopSalesAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -139,14 +147,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

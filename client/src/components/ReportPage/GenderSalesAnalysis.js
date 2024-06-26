@@ -4,8 +4,13 @@ import { Pie } from "react-chartjs-2";
 import * as d3 from "d3";
 import styled from "styled-components";
 
-const GenderSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) => {
+const GenderSalesAnalysis = ({
+  csvPath,
+  selectedDistrict,
+  selectedIndustry,
+}) => {
   const [genderChartData, setGenderChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -42,15 +47,27 @@ const GenderSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) =>
         }
       );
 
-      const totalSales = summedData["남성_매출_금액"] + summedData["여성_매출_금액"];
+      const totalSales =
+        summedData["남성_매출_금액"] + summedData["여성_매출_금액"];
 
-      const malePercentage = ((summedData["남성_매출_금액"] / totalSales) * 100).toFixed(1);
-      const femalePercentage = ((summedData["여성_매출_금액"] / totalSales) * 100).toFixed(1);
+      const malePercentage = (
+        (summedData["남성_매출_금액"] / totalSales) *
+        100
+      ).toFixed(1);
+      const femalePercentage = (
+        (summedData["여성_매출_금액"] / totalSales) *
+        100
+      ).toFixed(1);
 
       // 트렌드 메시지 생성
-      const trendMessage = summedData["남성_매출_금액"] > summedData["여성_매출_금액"]
-        ? `남성 매출이 여성보다 ${(malePercentage - femalePercentage).toFixed(1)}% 높습니다.`
-        : `여성 매출이 남성보다 ${(femalePercentage - malePercentage).toFixed(1)}% 높습니다.`;
+      const countMessage =
+        summedData["남성_매출_금액"] > summedData["여성_매출_금액"]
+          ? `남성 매출이 여성보다 ${(malePercentage - femalePercentage).toFixed(
+              1
+            )}% 높습니다.`
+          : `여성 매출이 남성보다 ${(femalePercentage - malePercentage).toFixed(
+              1
+            )}% 높습니다.`;
 
       setGenderChartData({
         labels: ["남성", "여성"],
@@ -63,12 +80,24 @@ const GenderSalesAnalysis = ({ csvPath, selectedDistrict, selectedIndustry }) =>
         ],
       });
 
-      setTrendMessage(trendMessage);
+      setCountMessage(countMessage);
+
+      const trendMessages = {
+        남성: "남성 고객을 대상으로 한 마케팅 전략이 중요합니다.",
+        여성: "여성 고객을 타겟으로 한 마케팅 전략이 중요합니다.",
+      };
+
+      setTrendMessage(
+        summedData["남성_매출_금액"] > summedData["여성_매출_금액"]
+          ? trendMessages["남성"]
+          : trendMessages["여성"]
+      );
     }
   };
 
   return (
     <AnalysisContainer>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {genderChartData && (
@@ -99,8 +128,16 @@ GenderSalesAnalysis.propTypes = {
 
 export default GenderSalesAnalysis;
 
+const div = styled.div`
+  display: flex;
+`;
+
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -108,9 +145,16 @@ const ChartContainer = styled.div`
   height: 400px;
 `;
 
+const CountMessage = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+`;
+
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

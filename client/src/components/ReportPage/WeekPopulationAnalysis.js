@@ -6,6 +6,7 @@ import Papa from "papaparse";
 
 const WeekPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
   const [weekChartData, setWeekChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -115,12 +116,16 @@ const WeekPopulationAnalysis = ({ csvPath, selectedDistrict }) => {
 
       // Calculate the trend message
       const maxDay = labels[maxIndex];
-      setTrendMessage(`가장 많은 유동인구가 발생하는 요일은 ${maxDay}입니다.`);
+      setCountMessage(`${maxDay}에 유동인구가 가장 많습니다.`);
+      setTrendMessage(
+        `${selectedDistrict}에서는 ${maxDay} 고객을 노려보는 것이 좋습니다.`
+      );
     }
   };
 
   return (
     <AnalysisContainer>
+      <CountMessage>{countMessage}</CountMessage>
       <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {weekChartData && (
@@ -139,7 +144,11 @@ WeekPopulationAnalysis.propTypes = {
 export default WeekPopulationAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -150,14 +159,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 const IncomeAnalysis = ({ csvPath, cityInfo, selectedDistrict }) => {
   const [chartData, setChartData] = useState(null);
+  const [countMessage, setCountMessage] = useState("");
   const [trendMessage, setTrendMessage] = useState("");
 
   useEffect(() => {
@@ -57,14 +58,76 @@ const IncomeAnalysis = ({ csvPath, cityInfo, selectedDistrict }) => {
       ],
     });
 
-    setTrendMessage(
-      `${selectedDistrict}, ${cityInfo}, 서울시의 평균 소득 구간`
-    );
+    let countMessage = "";
+    countMessage = `${selectedDistrict}의 평균 소득 구간은 ${meanDistrictRounded} 구간입니다.`;
+
+    setCountMessage(countMessage);
+
+    let trendMessage = "";
+
+    if (
+      meanDistrictRounded > meanCityRounded &&
+      meanDistrictRounded > meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 높은 지역입니다. 고급화된 서비스와 프리미엄 제품에 대한 수요가 클 것으로 예상됩니다.";
+    } else if (
+      meanDistrictRounded < meanCityRounded &&
+      meanDistrictRounded < meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 상대적으로 낮은 지역입니다. 가성비가 좋은 제품과 실용적인 서비스에 대한 수요가 높을 것으로 예상됩니다.";
+    } else if (
+      meanDistrictRounded === meanCityRounded &&
+      meanDistrictRounded === meanSeoul
+    ) {
+      trendMessage =
+        "평균 소득 수준이 도시 평균과 같습니다. 다양한 고객층을 겨냥한 균형 잡힌 상품 구성을 고려해보세요.";
+    } else if (
+      meanDistrictRounded > meanCityRounded &&
+      meanDistrictRounded === meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균보다 높고, 서울시 전체 평균과 같습니다. 중고급 제품에 대한 수요가 있을 수 있습니다.";
+    } else if (
+      meanDistrictRounded === meanCityRounded &&
+      meanDistrictRounded > meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균과 같고, 서울시 전체 평균보다 높습니다. 중고급 제품 및 서비스를 제공해보세요.";
+    } else if (
+      meanDistrictRounded < meanCityRounded &&
+      meanDistrictRounded === meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균보다 낮고, 서울시 전체 평균과 같습니다. 실용적이고 경제적인 제품을 제공해보세요.";
+    } else if (
+      meanDistrictRounded === meanCityRounded &&
+      meanDistrictRounded < meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균과 같고, 서울시 전체 평균보다 낮습니다. 경제적인 상품과 서비스를 제공하는 것이 좋습니다.";
+    } else if (
+      meanDistrictRounded > meanCityRounded &&
+      meanDistrictRounded < meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균보다 높고, 서울시 전체 평균보다 낮습니다. 중간 가격대의 제품과 서비스를 제공해보세요.";
+    } else if (
+      meanDistrictRounded < meanCityRounded &&
+      meanDistrictRounded > meanSeoul
+    ) {
+      trendMessage =
+        "소득 수준이 도시 평균보다 낮고, 서울시 전체 평균보다 높습니다. 중간 가격대의 제품과 서비스를 제공해보세요.";
+    }
+
+    setTrendMessage(trendMessage);
   };
 
   return (
     <AnalysisContainer>
-      <CountMessage>{trendMessage}</CountMessage>
+      <CountMessage>{countMessage}</CountMessage>
+      <TrendMessage>{trendMessage}</TrendMessage>
       <ChartContainer>
         {chartData && (
           <Bar
@@ -109,7 +172,11 @@ IncomeAnalysis.propTypes = {
 export default IncomeAnalysis;
 
 const AnalysisContainer = styled.div`
+  border: 3px solid #ddd;
+  padding: 30px 20px;
+  border-radius: 5px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 const ChartContainer = styled.div`
@@ -120,14 +187,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;

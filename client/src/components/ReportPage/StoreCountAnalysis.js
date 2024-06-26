@@ -96,6 +96,7 @@ export default StoreCountAnalysis;
 const AnalysisContainer = styled.div`
   flex: 1;
   margin-bottom: 20px;
+  width: 50%;
 `;
 
 const ChartContainer = styled.div`
@@ -106,14 +107,13 @@ const ChartContainer = styled.div`
 const CountMessage = styled.p`
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 20px;
   text-align: start;
-  color: #000000;
 `;
 
 const TrendMessage = styled.p`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin: 15px 0 50px 0;
   text-align: start;
-  color: #474242;
+  color: red;
+  line-height: 1.5;
 `;
