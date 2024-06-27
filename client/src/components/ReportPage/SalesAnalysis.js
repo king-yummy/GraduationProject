@@ -127,7 +127,7 @@ const SalesAnalysis = ({
       ],
     });
 
-    setCountMessage(`서울시, ${cityInfo}, ${selectedDistrict} 매출액`);
+    setCountMessage(`서울시, ${cityInfo}, ${selectedDistrict}의 ${selectedIndustry} 상권 매출액`);
 
     const thirdQuarter = meanDistrict.find(
       (d) => d["기준_년분기"] === "2023년 3분기"
@@ -249,29 +249,29 @@ const SalesAnalysis = ({
       const maxTimePeriod = labels[maxTimePeriodIndex];
 
       setCountMessage2(
-        `${selectedDistrict}은 ${maxTimePeriod}에 가장 많은 매출액이 발생합니다.`
+        `${selectedDistrict} ${selectedIndustry} 상권은 ${maxTimePeriod}에 가장 많은 매출액이 발생합니다.`
       );
 
       // 시간대별 매출액에 따른 조언 추가
       if (maxTimePeriod === "00~06시") {
         setTrendMessage2(
-          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 심야 시간대에 집중하여 운영하는 것이 유리할 수 있습니다. 24시간 영업이나 심야 할인 이벤트를 고려해보세요.`
+          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 심야 시간대에 집중하여 운영하는 것이 유리할 수 있습니다.`
         );
       } else if (maxTimePeriod === "06~11시") {
         setTrendMessage2(
-          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 아침 시간대의 고객을 대상으로 한 프로모션이나 아침 메뉴 개발을 고려해보세요.`
+          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 아침 시간대의 고객을 대상으로 한 프로모션을 고려해보세요.`
         );
       } else if (maxTimePeriod === "11~14시") {
         setTrendMessage2(
-          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 점심 시간대에 맞춘 메뉴와 빠른 서비스를 제공하는 것이 좋습니다.`
+          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 점심 시간대에 맞춘 빠른 서비스를 제공하는 것이 좋습니다.`
         );
       } else if (maxTimePeriod === "14~17시") {
         setTrendMessage2(
-          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 오후 시간대에 적합한 마케팅 전략을 수립해보세요. 브런치나 커피 관련 이벤트를 고려해보세요.`
+          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 오후 시간대에 적합한 마케팅 전략을 수립해보세요.`
         );
       } else if (maxTimePeriod === "17~21시") {
         setTrendMessage2(
-          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 저녁 시간대에 맞춘 다양한 메뉴와 이벤트를 기획해보세요.`
+          `${maxTimePeriod} 시간대에 가장 매출이 높습니다. 저녁 시간대에 맞춘 다양한 이벤트를 기획해보세요.`
         );
       } else if (maxTimePeriod === "21~24시") {
         setTrendMessage2(

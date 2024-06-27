@@ -62,10 +62,10 @@ const GenderSalesAnalysis = ({
       // 트렌드 메시지 생성
       const countMessage =
         summedData["남성_매출_금액"] > summedData["여성_매출_금액"]
-          ? `남성 매출이 여성보다 ${(malePercentage - femalePercentage).toFixed(
+          ? `${selectedDistrict} ${selectedIndustry} 상권은 남성 매출이 여성보다 ${(malePercentage - femalePercentage).toFixed(
               1
             )}% 높습니다.`
-          : `여성 매출이 남성보다 ${(femalePercentage - malePercentage).toFixed(
+          : `${selectedDistrict} ${selectedIndustry} 상권은 여성 매출이 남성보다 ${(femalePercentage - malePercentage).toFixed(
               1
             )}% 높습니다.`;
 
