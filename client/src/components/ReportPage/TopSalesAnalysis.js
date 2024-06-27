@@ -78,7 +78,7 @@ const TopSalesAnalysis = ({ csvPath, selectedDistrict }) => {
         ],
       });
 
-      setCountMessage(`${selectedDistrict}의 주요 업종별 매출`);
+      setCountMessage(`${selectedDistrict}의 업종별 매출 비율`);
 
       // 매출 상위 3개 업종 추출
       const top3Categories = sortedCategories.slice(0, 3).map(([key]) => key);

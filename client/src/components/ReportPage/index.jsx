@@ -52,6 +52,21 @@ const ReportPage = () => {
 
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 0);
+    const industryOffsetTop = industryRef.current.offsetTop - 130;
+    const salesOffsetTop = salesRef.current.offsetTop - 130;
+    const populationOffsetTop = populationRef.current.offsetTop - 130;
+    const realEstateOffsetTop = realEstateRef.current.offsetTop - 130;
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition >= realEstateOffsetTop) {
+      setActiveNavItem(3);
+    } else if (scrollPosition >= populationOffsetTop) {
+      setActiveNavItem(2);
+    } else if (scrollPosition >= salesOffsetTop) {
+      setActiveNavItem(1);
+    } else if (scrollPosition >= industryOffsetTop) {
+      setActiveNavItem(0);
+    }
   };
 
   const handleNavItemClick = (ref, index) => {
@@ -277,3 +292,4 @@ const Row = styled.div`
   margin-bottom: 20px;
   box-sizing: border-box;
 `;
+
