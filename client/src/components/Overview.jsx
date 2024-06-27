@@ -95,7 +95,7 @@ export default function Overview(props) {
       <div className="rankingsLists">
         <div></div>
         <CategoryWrapper>
-          <h3>'요일별 유동인구 변화율 순위'</h3>
+          <h3>요일별 유동인구 변화율 순위</h3>
           <RankingsList
             title="요일별 유동인구 변화율 순위"
             rankingsByDay={populationRankingsByDay}
@@ -103,7 +103,7 @@ export default function Overview(props) {
           />
         </CategoryWrapper>
         <CategoryWrapper>
-          <h3>'카테고리별 매출 변화량'</h3>
+          <h3>카테고리별 매출 변화율 순위</h3>
           <select value={selectedCategory} onChange={handleCategoryChange}>
             {Object.keys(salesChangeRankingsByCategory).map((category) => (
               <option key={category} value={category}>
