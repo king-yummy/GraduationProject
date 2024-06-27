@@ -85,7 +85,7 @@ export default function Overview(props) {
       <NewsBanner />
 
       <FranchiseButton onClick={handleFranchiseButtonClick}>
-        프랜차이즈 분석
+        프랜차이즈 정보
       </FranchiseButton>
 
       <div className="districtName">
