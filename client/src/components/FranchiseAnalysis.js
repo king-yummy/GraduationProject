@@ -99,7 +99,7 @@ const FranchiseAnalysis = () => {
 
   return (
     <Container>
-      <h1>프랜차이즈 분석</h1>
+      <h1>프랜차이즈 정보</h1>
       <FilterAndDataContainer>
         <FilterTableContainer>
           <FilterTable>
@@ -184,6 +184,7 @@ const Container = styled.div`
 
 const FilterAndDataContainer = styled.div`
   width: 100%;
+  margin-top: 20px;
 `;
 
 const FilterTableContainer = styled.div`
