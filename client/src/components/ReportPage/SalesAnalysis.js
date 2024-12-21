@@ -105,21 +105,21 @@ const SalesAnalysis = ({
       datasets: [
         {
           label: "서울시 평균",
-          data: meanAll.map((d) => d["당월_매출_금액"] / 10000), // 단위 변환
+          data: meanAll.map((d) => d["당월_매출_금액"] / 30000), // 단위 변환
           borderColor: "grey",
           fill: false,
           tension: 0.4,
         },
         {
           label: `${cityInfo} 평균`,
-          data: meanCity.map((d) => d["당월_매출_금액"] / 10000), // 단위 변환
+          data: meanCity.map((d) => d["당월_매출_금액"] / 30000), // 단위 변환
           borderColor: "orange",
           fill: false,
           tension: 0.4,
         },
         {
           label: `${selectedDistrict} 매출`,
-          data: meanDistrict.map((d) => d["당월_매출_금액"] / 10000), // 단위 변환
+          data: meanDistrict.map((d) => d["당월_매출_금액"] / 30000), // 단위 변환
           borderColor: "skyblue",
           fill: false,
           tension: 0.4,

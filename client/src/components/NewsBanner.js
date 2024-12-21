@@ -99,7 +99,7 @@ const ClickableBanner = styled.div`
   justify-content: center;
   position: absolute;
   top: 20px;
-  left: 20px; /* 왼쪽 상단으로 위치 변경 */
+  right: 150px; /* 왼쪽 상단으로 위치 변경 */
   z-index: 1000;
   width: auto;
   max-width: 600px;

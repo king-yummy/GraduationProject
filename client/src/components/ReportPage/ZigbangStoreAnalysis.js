@@ -25,7 +25,7 @@ const ZigbangStoreAnalysis = ({ gu, dong }) => {
     const fetchData = async () => {
       try {
         const formattedDong = formatDongName(dong);
-        console.log(`검색할 주소: ${gu} ${formattedDong}`);
+        //console.log(`검색할 주소: ${gu} ${formattedDong}`);
   
         // 주소로 검색하여 위도와 경도 얻기
         const searchUrl = `https://apis.zigbang.com/v2/search?leaseYn=N&q=${gu}&serviceType=상가`;

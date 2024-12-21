@@ -8,6 +8,7 @@ const StoreCountAnalysis = ({
   csvPath,
   selectedDistrict,
   selectedIndustry,
+  onAnalysisComplete, // 추가: 상위 컴포넌트로 데이터 전달을 위한 콜백
 }) => {
   const [chartData, setChartData] = useState(null);
   const [latestStoreCount, setLatestStoreCount] = useState("");
@@ -54,6 +55,14 @@ const StoreCountAnalysis = ({
 
             setStoreCountMessage(storeCountMessage);
 
+            // 상위 컴포넌트로 분석 결과 전달
+            if (onAnalysisComplete) {
+              onAnalysisComplete({
+                countMessages: [`점포수는 ${latestStoreCount}개 입니다.`],
+                trendMessages: [storeCountMessage],
+              });
+            }
+
             const chartData = {
               labels: quarters,
               datasets: [
@@ -89,6 +98,7 @@ StoreCountAnalysis.propTypes = {
   csvPath: PropTypes.string.isRequired,
   selectedDistrict: PropTypes.string.isRequired,
   selectedIndustry: PropTypes.string.isRequired,
+  onAnalysisComplete: PropTypes.func, // 추가: Prop 검증
 };
 
 export default StoreCountAnalysis;
